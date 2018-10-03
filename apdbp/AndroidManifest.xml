@@ -1,0 +1,59 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.apakor"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="15" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <application
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:theme="@style/CustomActionBarTheme" >
+        <activity
+            android:name="LoginAct"
+            android:label="@string/title_activity_login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="MenuAct"></activity>
+        <activity android:name="LapAwalBencanaAct_1"></activity>
+        <activity android:name=".LapAwalBencanaAct_3"></activity>
+        <activity android:name=".LapAwalBencanaAct_4"></activity>
+        <activity android:name=".LapAwalBencanaAct_5"></activity>
+        <activity android:name="LapLanjutanBencanaAct_1"></activity>
+        <activity android:name="LapLanjutanBencanaAct_2"></activity>
+        <activity android:name="LapLanjutanBencanaAct_3"></activity>
+        <activity android:name="LapLanjutanBencanaAct_4"></activity>
+        <activity android:name="SendMessageAct"></activity>
+        <activity android:name="SettingAct"></activity>
+        <activity android:name=".LapAwalBencanaAct_6"></activity>
+        <activity android:name=".LapAwalBencanaAct_7"></activity>
+        <activity android:name="LapLanjutanBencanaAct_5"></activity>
+        <activity android:name="LapLanjutanBencanaAct_6"></activity>
+        <activity android:name="LapLanjutanBencanaAct_7"></activity>
+        <uses-library android:name="com.google.android.maps" />
+        <activity android:name="MenuBencanaAct"></activity>
+        <activity android:name="MenuPoskoAct"></activity>
+        <activity android:name="LapAwalPoskoAct1"></activity>
+        <activity android:name="Test"></activity>
+        <activity android:name="LapAwalPoskoAct2"></activity>
+        <activity android:name="LapAwalPoskoAct3"></activity>
+        <activity android:name="LapLanjutanPoskoAct_1"></activity>
+        <activity android:name="LapLanjutanPoskoAct_2"></activity>
+        <activity android:name="ChangeSMSGateAct"></activity>
+        <activity android:name="CheckGPSAct"></activity>
+        <activity android:name="LapAwalBencanaAct_2"></activity>
+        <activity android:name=".MenuUtamaAct"></activity>
+        <activity android:name="TabMenuUtama"></activity>
+        <activity android:name="ArchAct"></activity>
+        <activity android:name="ChangePassAct"></activity>
+    </application>
+
+</manifest>

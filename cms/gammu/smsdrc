@@ -1,0 +1,20 @@
+[gammu]
+port = com3:
+connection = at19200
+
+#Koneksi Ponsel dengan Database
+[smsd]
+service = mysql
+logfile = smsdlog
+debuglevel = 0
+phoneid = tello
+commtimeout = 10
+sendtimeout = 10
+deliveryreport = no
+PIN = 1234
+
+#Konfigurasi koneksi MySQL
+pc = localhost
+user = root
+password = 
+database = smsdb

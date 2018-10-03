@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_repeating"  >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="445dp"
+        >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:text="@string/title_2"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="220dp"
+            android:text="@string/setting"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/buttonSetSMSGate"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="@string/set_sms" 
+            
+            android:textColor="#FFFFFF"
+			android:textSize="16sp"
+			android:background="@drawable/buttonselector"
+			android:shadowColor="#A8A8A8"
+			android:shadowDx="0"
+			android:shadowDy="0"
+			android:shadowRadius="5"/>
+
+
+
+        <Button
+            android:id="@+id/buttonCekGPS"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/buttonSetSMSGate"
+            android:layout_alignRight="@+id/buttonSetSMSGate"
+            android:layout_below="@+id/buttonSetSMSGate"
+            android:text="@string/cek_gps" 
+            android:layout_marginTop="5dp"
+            
+            android:textColor="#FFFFFF"
+			android:textSize="16sp"
+			android:background="@drawable/buttonselector"
+			android:shadowColor="#A8A8A8"
+			android:shadowDx="0"
+			android:shadowDy="0"
+			android:shadowRadius="5"/>
+
+
+<!-- 
+        <Button
+            android:id="@+id/buttonKembaliSetting"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/buttonCekGPS"
+            android:layout_alignRight="@+id/buttonCekGPS"
+            android:layout_below="@+id/buttonCekGPS"
+            android:text="@string/kembali" 
+            android:layout_marginTop="5dp"
+            
+            android:textColor="#FFFFFF"
+			android:textSize="16sp"
+			android:background="@drawable/buttonshape"
+			android:shadowColor="#A8A8A8"
+			android:shadowDx="0"
+			android:shadowDy="0"
+			android:shadowRadius="5"/>
+			 -->
+
+        <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_marginRight="3dp"
+        android:layout_toRightOf="@+id/textView3"
+        android:contentDescription="@string/icon"
+        android:src="@drawable/iconbpbpd"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/textView3"
+        android:src="@drawable/uajy"
+        android:layout_marginLeft="3dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:visibility="invisible"
+        android:text="Text" />
+
+    </RelativeLayout>
+
+</ScrollView>

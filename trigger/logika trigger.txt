@@ -1,0 +1,131 @@
+SELECT TextDecoded FROM `inbox` WHERE SenderNumber= 6281321312321312
+
+SELECT REPLACE(TextDecoded, '~', ' ') FROM `inbox` WHERE SenderNumber= 6281321312321312
+
+FUNGSI SPLIT BIKIN SENDIRI 
+
+	CREATE FUNCTION SPLIT_STR(
+	  x VARCHAR(255),
+	  delim VARCHAR(12),
+	  pos INT
+	)
+	RETURNS VARCHAR(255)
+	RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
+	       LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
+	       delim, '');
+
+SELECT SPLIT_STR(TextDecoded, '~', 1) FROM `inbox` AS contoh WHERE SenderNumber= 6281321312321312
+=> Memecah kata dari ~, kata ke berapa
+
+SELECT SUBSTRING(TextDecoded, '1', '3') FROM `inbox` AS contoh WHERE SenderNumber= 6281321312321312 
+=> Dapet jenis laporan (LBA, dll)
+
+SELECT SUBSTRING(TextDecoded, '3', '5') FROM `inbox` AS contoh WHERE SenderNumber= 6281321312321312 
+=> Dapet digit laporan 
+
+(kalo digit 01, insert table)
+(kalo digit > 01, ngupdate table)
+
+SELECT LENGTH(TextDecoded) - LENGTH(REPLACE(TextDecoded, '~', ''))+1 FROM inbox WHERE SenderNumber= 6281321312321312
+=> Hitung banyak kata
+
+SELECT RIGHT ('00' + LTRIM('2 DIGITNYA....'),2)
+=> BACA 2 DIGIT KARAKTER JADI NILAI ANGKA
+
+SELECT * FROM `inbox` 
+WHERE SUBSTRING(TextDecoded, '1', '3') = 'LPA' 
+AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '4', '2')),2) = '1' 
+ORDER BY ReceivingDateTime DESC 
+limit 1
+=> cocokin part sms
+
+SELECT COUNT(*) FROM `inbox` 
+WHERE SUBSTRING(TextDecoded, '3', '3') = 'LPA' AND 
+SUBSTRING(TextDecoded, '6', '2') = 'isi dengan counter 2 digit ya....' 
+ORDER BY ReceivingDateTime DESC
+limit 1
+=> ngambil isi part sms (belom fix)
+
+
+
+
+
+
+
+LBA = 
+//Form 1
+JumlahTimBPBD
+JumahTimDinkes
+JumlahTimDinsos
+JumlahTimPU
+JenisKejadianBencana
+WaktuBencana
+TanggalBencana
+LatitudeBencana
+LongitudeBencana
+//Form 2
+LokasiDusunBencana
+LokasiDesaBencana
+LokasiKecamatanBencana
+LokasiKabupatenBencana
+PenyebabBencana
+//Form 3
+JumlahMeninggal
+JumlahLukaBerat
+JumlahLukaRingan
+JumlahHilang
+JumlahJiwaMengungsi
+JumlahKKMengungsi
+//Form 4
+JumlahRumahRusak
+JumlahKantorRusaka
+JumlahFasilitasKesehatanRusak
+JumlahFasilitasPendidikanRusak
+JumlahFasilitasUmumRusak
+JumlahSaranaIbadahRusak
+//Form 5	
+JumlahJembatanRusak
+JumlahJalanRusak
+JumlahTanggulRusak
+JumlahSawahRusak
+JumlahLahanRusak
+JumlahLainLainRusak
+//Form 6
+WaktuPeninjauan
+TanggalPeninjauan
+MendirikanPosko
+MelakukanRapat
+MelaksanakanEvakuasi
+PelayananKesehatan
+DapurUmum
+BantuanMakanan
+PengarahanTenaga
+//Form 7		
+SumberDaya
+Kendala
+Kkebutuhan
+RencanaTdkLanjut
+
+
+LPA = 
+//Form 1
+NamaPosko 
+LatitudePosko 
+LongitudePosko
+DusunPosko
+KecamatanPosko
+KotaPosko
+ProvinsiPosko
+//Form 2
+KapasitasPosko
+JumlahFasilitasDapurPosko
+JumlahFasilitasKesehatan
+JumlahFasilitasMCKPosko
+//Form3
+JumlahKKMengungsi
+JumlahPriaMengungsi
+JumlahWanitaMengungsi
+JumlahBalitaMengungsi
+
+
+

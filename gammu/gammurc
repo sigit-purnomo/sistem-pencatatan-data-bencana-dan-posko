@@ -1,0 +1,3 @@
+[gammu]
+port = com8:
+connection = at19200

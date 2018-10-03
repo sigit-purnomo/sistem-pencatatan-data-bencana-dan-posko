@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/bg_repeating" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/lba"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+			<!-- 
+             <TextView
+                 android:id="@+id/textView2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView1"
+                 android:layout_centerHorizontal="true"
+                 android:layout_marginTop="14dp"
+                 android:text="@string/penanganan"
+                 android:textAppearance="?android:attr/textAppearanceMedium" /> -->
+
+             <TextView
+                 android:id="@+id/textView3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerHorizontal="true"
+                 android:layout_below="@+id/textView1"
+                 android:layout_marginTop="16dp"
+                 android:text="@string/upaya_penanganan"
+                 android:textAppearance="?android:attr/textAppearanceMedium" />
+
+             <Button
+                 android:id="@+id/buttonSetTanggalPeninjauan"
+                 style="?android:attr/buttonStyleSmall"
+                 android:layout_width="190dp"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/buttonSetWaktuPeninjauan"
+                 android:layout_marginTop="5dp"
+                 android:layout_centerHorizontal="true"
+                 
+                 android:text="@string/set_tanggal_2" 
+                 
+                 android:textColor="#FFFFFF"
+					android:textSize="16sp"
+					android:background="@drawable/buttonselector2"
+					android:shadowColor="#A8A8A8"
+					android:shadowDx="0"
+					android:shadowDy="0"
+					android:shadowRadius="5"/>
+             
+             <ImageView
+                android:id="@+id/imageViewStatusTanggal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/buttonSetTanggalPeninjauan"
+                android:layout_alignTop="@+id/buttonSetTanggalPeninjauan"
+                android:layout_toRightOf="@+id/buttonSetTanggalPeninjauan"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ok"
+                android:visibility="invisible"  />
+
+             <Button
+                 android:id="@+id/buttonSetWaktuPeninjauan"
+                 style="?android:attr/buttonStyleSmall"
+                 android:layout_width="190dp"
+                 android:layout_height="wrap_content"
+                  android:layout_below="@+id/textView3"
+                 android:layout_centerHorizontal="true"
+                 android:text="@string/set_waktu_2" 
+                 android:layout_marginTop="14dp"
+                 
+                 android:textColor="#FFFFFF"
+				android:textSize="16sp"
+				android:background="@drawable/buttonselector2"
+				android:shadowColor="#A8A8A8"
+				android:shadowDx="0"
+				android:shadowDy="0"
+				android:shadowRadius="5"/>
+             
+             <ImageView
+                android:id="@+id/imageViewStatusWaktu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/buttonSetWaktuPeninjauan"
+                android:layout_alignTop="@+id/buttonSetWaktuPeninjauan"
+                android:layout_toRightOf="@+id/buttonSetWaktuPeninjauan"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ok" 
+                android:visibility="invisible" />
+
+             <TextView
+                 android:id="@+id/textView4"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerHorizontal="true"
+                 android:layout_below="@+id/buttonSetTanggalPeninjauan"
+                 android:layout_marginTop="15dp"
+                 android:text="@string/pengecekan_penganan" 
+                 android:textAppearance="?android:attr/textAppearanceMedium" />
+
+             <TextView
+                 android:id="@+id/textView5"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView4"
+                 android:layout_centerHorizontal="true"
+                 android:layout_marginTop="14dp"
+                 android:text="@string/mendirikan_posko" />
+
+             <TextView
+                 android:id="@+id/TextView01"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/radioGroupPosko"
+                 android:layout_centerHorizontal="true"
+                 android:text="@string/melakukan_rapat" />
+
+             <TextView
+                 android:id="@+id/textView6"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/radioGroupRapat"
+                 android:layout_centerHorizontal="true"
+                 android:text="@string/melaksanakan_penyelamatan" />
+
+             <TextView
+                 android:id="@+id/textView7"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/radioGroupEvakuasi"
+                 android:layout_centerHorizontal="true"
+                 android:text="@string/melaksanakan_pelayanan_kesehatan" />
+
+             <TextView
+                 android:id="@+id/textView8"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/radioGroupPelayananKesehatan"
+                 android:layout_centerHorizontal="true"
+                 android:text="@string/pendirian_dapur_umum" />
+
+
+
+             <TextView
+                 android:id="@+id/textView9"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/radioGroupDapurUmum"
+                 android:layout_centerHorizontal="true"
+                 android:text="@string/melaksanakan_pendistribusian" />
+
+             <Button
+                 android:id="@+id/buttonKembali"
+                 android:layout_width="70dp"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentLeft="true"
+                 android:layout_below="@+id/textView10"
+                 android:text="@string/kembali"
+                 android:layout_marginLeft="25dp"
+                android:layout_marginTop="90dp" 
+                 
+                 android:textColor="#FFFFFF"
+				android:textSize="16sp"
+				android:background="@drawable/buttonselector"
+				android:shadowColor="#A8A8A8"
+				android:shadowDx="0"
+				android:shadowDy="0"
+				android:shadowRadius="5"/>
+
+             <TextView
+                 android:id="@+id/textView10"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/radioGroupBantuanMakanan"
+                 android:layout_centerHorizontal="true"
+                 android:gravity="center"
+                 android:text="@string/pengarahan_tenaga_aparat" />
+
+             <Button
+                 android:id="@+id/buttonLanjut"
+                 android:layout_width="110dp"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView10"
+                 android:layout_alignParentRight="true"
+                 android:text="@string/lanjut"
+                 android:layout_marginRight="25dp"
+                android:layout_marginTop="90dp"
+                 
+                 android:textColor="#FFFFFF"
+				android:textSize="16sp"
+				android:background="@drawable/buttonselector"
+				android:shadowColor="#A8A8A8"
+				android:shadowDx="0"
+				android:shadowDy="0"
+				android:shadowRadius="5" />
+
+
+
+             <RadioGroup
+                 android:id="@+id/radioGroupPosko"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView5"
+                 android:layout_centerHorizontal="true" >
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio0"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:checked="true"
+                     android:text="@string/sudah" />
+
+
+                 <RadioButton
+                     android:id="@+id/radio1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/belum" />
+
+             </RadioGroup>
+
+
+
+             <RadioGroup
+                 android:id="@+id/radioGroupRapat"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/TextView01"
+                 android:layout_centerHorizontal="true" >
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio2"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:checked="true"
+                     android:text="@string/sudah" />
+
+
+                 <RadioButton
+                     android:id="@+id/radio3"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/belum" />
+
+             </RadioGroup>
+
+             <RadioGroup
+                 android:id="@+id/radioGroupEvakuasi"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView6"
+                 android:layout_centerHorizontal="true" >
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio4"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:checked="true"
+                     android:text="@string/sudah" />
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio5"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/belum" />
+
+             </RadioGroup>
+
+
+
+             <RadioGroup
+                 android:id="@+id/radioGroupPelayananKesehatan"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView7"
+                 android:layout_centerHorizontal="true" >
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio6"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:checked="true"
+                     android:text="@string/sudah" />
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio7"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/belum" />
+
+             </RadioGroup>
+
+
+
+             <RadioGroup
+                 android:id="@+id/radioGroupDapurUmum"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView8"
+                 android:layout_centerHorizontal="true" >
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio8"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:checked="true"
+                     android:text="@string/sudah" />
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio9"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/belum" />
+
+             </RadioGroup>
+
+
+
+             <RadioGroup
+                 android:id="@+id/radioGroupBantuanMakanan"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView9"
+                 android:layout_centerHorizontal="true" >
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio10"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:checked="true"
+                     android:text="@string/sudah" />
+
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio11"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/belum" />
+
+             </RadioGroup>
+
+
+
+             <RadioGroup
+                 android:id="@+id/radioGroupPengarahan"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView10"
+                 android:layout_centerHorizontal="true" >
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio12"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:checked="true"
+                     android:text="@string/sudah" />
+
+
+
+
+
+                 <RadioButton
+                     android:id="@+id/radio13"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/belum" />
+
+             </RadioGroup>
+
+         </RelativeLayout>
+
+</ScrollView>

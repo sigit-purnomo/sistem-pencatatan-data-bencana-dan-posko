@@ -1,0 +1,14 @@
+Kebutuhan Sistem
+1. XAMPP
+2. Modem + SIM Card Aktif
+3. Gammu
+
+Instalasi 
+1. Instalasi XAMPP
+2. Instalasi Gammu (XAMPP harus aktif + modem sudah menancap)
+3. Create Trigger di basis data Gammu
+
+Penggunaan
+1. Pastikan XAMPP sudah aktif
+2. Pastikan Service Gammu aktif (cek task manager)
+3. Pastikan Trigger sudah di create di basis data Gammu

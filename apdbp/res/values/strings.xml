@@ -1,0 +1,183 @@
+<resources>
+
+    <string name="app_name">APDBP</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_login">APDBP</string>
+    <string name="title">APDBP</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="login2">LOGIN</string>
+    <string name="menu">MENU UTAMA</string>
+    <string name="lap_awal">Laporan Awal</string>
+    <string name="lap_perkembangan">Laporan Perkembangan</string>
+    <string name="setting">SETTING</string>
+    <string name="keluar">Keluar</string>
+    <string name="icon">Icon BPBD</string>
+    <string name="ubah_pass">Ubah Password</string>
+    <string name="reset_pass">Reset Password</string>
+    <string name="set_sms">Set Nomor SMS Gateaway</string>
+    <string name="cek_gps">Cek GPS</string>
+    <string name="kembali">Kembali</string>
+    <string name="bencana">Bencana</string>
+    <string-array name="jenis_bencana">
+        <item >Gempa Bumi</item>
+        <item >Gunung Berapi</item>
+        <item >Tsunami</item>
+        <item >Tanah Longsor</item>
+        <item >Banjir</item>
+        <item >Kekeringan</item>
+        <item >Kebakaran</item>
+        <item >Kebakaran Hutan</item>
+        <item >Angin Puting Beliung</item>
+        <item >Abrasi</item>
+        <item >Lainnya</item>
+        
+    </string-array>
+        <string name="jenis">Jenis Kejadian</string>
+        <string name="set_waktu">Set Waktu Bencana</string>
+        <string name="lokasi_kejadian">Lokasi Kejadian</string>
+        <string name="set_tanggal">Set Tanggal Bencana</string>
+        <string name="dusun">Dusun</string>
+        <string name="desa">Desa</string>
+        <string name="kecamatan">Kecamatan</string>
+        <string name="kabupaten">Kabupaten</string>
+        <string name="lanjut">Lanjutkan</string>
+        <string name="batal">Batal</string>
+        <string name="penyebab_bencana">Penyebab Bencana</string>
+        <string name="korban">Korban</string>
+        <string name="jumlah_meninggal">Jumlah Meninggal</string>
+        <string name="jumlah_luka_berat">Jumlah Luka Berat</string>
+        <string name="jumlah_luka_ringan">Jumlah Luka Ringan</string>
+        <string name="jumlah_hilang">Jumlah Hilang</string>
+        <string name="jumlah_jiwa_mengungsi">Jumlah Jiwa Mengungsi</string>
+        <string name="jumlah_kk_mengungsi">Jumlah KK Mengungsi</string>
+        <string name="kerusakan">Kerusakan</string>
+        <string name="jumlah_kerusakan_rumah">Jumlah Rumah Rusak</string>
+        <string name="jumlah_kerusakan_kantor">Jumlah Kantor Rusak</string>
+        <string name="jumlah_kerusakan_fas_kesehatan">Jumlah Fas. Kesehatan Rusak</string>
+        <string name="jumlah_kerusakan_fas_pendidikan">Jumlah Fas. Pendidikan Rusak</string>
+        <string name="jumlah_kerusakan_fas_umum">Jumlah Fas. Umum Rusak</string>
+        <string name="jumlah_kerusakan_sarana_ibadah">Jumlah Sarana Ibadah Rusak</string>
+        <string name="jumlah_kerusakan_jalan">Jumlah Jalan Rusak</string>
+        <string name="jumlah_kerusakan_jembatan">Jumlah Jembatan Rusak</string>
+        <string name="jumlah_kerusakan_tanggul">Jumlah Tanggul Rusak</string>
+        <string name="jumlah_kerusakan_sawah">Jumlah Sawah Rusak</string>
+        <string name="jumlah_kerusakan_lahan_tani">Jumlah Lahan Rusak</string>
+        <string name="jumlah_kerusakan_lain_lain">Jumlah Lain Lain</string>
+        <string name="upaya_penanganan">Upaya Penanganan</string>
+        <string name="set_tanggal_2">Set Tanggal Peninjauan</string>
+        <string name="set_waktu_2">Set Waktu Peninjauan</string>
+        <string name="pengecekan_penganan">Pengecekan Upaya Penanganan</string>
+        <string name="mendirikan_posko">Mendirikan Posko SATLAK PB/BPBD</string>
+        <string name="sudah">Sudah</string>
+        <string name="melakukan_rapat">Melakukan Rapat Koordinasi</string>
+        <string name="melaksanakan_penyelamatan">Melaksanakan Penyelamatan/Evakuasi</string>
+        <string name="melaksanakan_pelayanan_kesehatan">Melaksanakan Pelayanan Kesehatan</string>
+        <string name="pendirian_dapur_umum">Melaksanakan Pendirian Dapur Umum</string>
+        <string name="melaksanakan_pendistribusian">Melaksanakan Pendistribusian Bantuan Makanan</string>
+        <string name="pengarahan_tenaga_aparat">Pengarahan Tenaga Aparat Pemda, TNI, Polri, SAR, Tagana, PMI, Relawan Masyarakat, dll</string>
+        <string name="sumber_daya">Sumber Daya Yang Tersedia Di Lokasi?</string>
+        <string name="kendala">Kendala Yang Dihadapi?</string>
+        <string name="kebutuhan_mendesak">Kebutuhan Mendesak Sesuai Urutan Prioritas?</string>
+        <string name="rencana_tidak_lanjut">Rencana Tindak Lanjut SATLAK PB/BPBD Kabupaten Kota</string>
+        <string name="pass_lama">Password Lama</string>
+        <string name="pass_baru">Password Baru</string>
+        <string name="ver_pass_baru">Verifikasi Pass Baru</string>
+        <string name="ubah">Ubah</string>
+        <string name="kirim">Kirim Data</string>
+        <string name="set_tujuan_sms">Set Nomor SMS Gateway</string>
+        <string name="nomor">Nomor Tujuan SMS Gateway</string>
+        <string name="cek_posisi">Cek Posisi User</string>
+        <string name="lap_bencana">LAPORAN BENCANA</string>
+        <string name="lap_posko">LAPORAN POSKO</string>
+        <string name="menu_bencana">MENU BENCANA</string>
+        <string name="menu_posko">MENU POSKO</string>
+        <string name="posko">Posko</string>
+        <string name="lokasi_posko">Lokasi Posko</string>
+        <string name="nama_posko">Nama Posko</string>
+        <string name="kota">Kota</string>
+        <string name="provinsi">Provinsi</string>
+        <string name="pendataan_posko">Pendataan Posko</string>
+        <string name="kapasitas_posko">Kapasitas Posko</string>
+        <string name="jumlah_fas_dapur">Jumlah Fasilitas Dapur</string>
+        <string name="jumlah_fas_kesehatan">Jumlah Fasilitas Kesehatan</string>
+        <string name="jumlah_fas_mck">Jumlah Fasilitas MCK</string>
+        <string name="pendataan_pengungsi">Pendataan Pengungsi</string>
+        <string name="jumlah_pria_mengungsi">Jumlah Pria Mengungsi</string>
+        <string name="jumlah_wanita_mengungsi">Jumlah Wanita Mengungsi</string>
+        <string name="jumlah_balita_mengungsi">Jumlah Balita Mengungsi</string>
+        <string name="masukan_id_posko">Masukan ID Posko Yang Diterima</string>
+        <string name="jenis_bencana">Jenis Bencana</string>
+        <string name="lokasi_bencana">Lokasi Bencana</string>
+        <string name="jumlah_korban">Jumlah Korban</string>
+        <string name="jumlah_kerusakan">Jumlah Kerusakan</string>
+        <string name="penanganan">Penanganan</string>
+        <string name="masukan_id_bencana">Masukan ID Bencana Yang Diterima</string>
+        <string name="latitude">Latitude</string>
+        <string name="longitude">Longitude</string>
+        <string name="set_lokasi">Set Koordinat Lokasi</string>
+        <string name="belum">Belum</string>
+        <string name="title_2">Aplikasi Pencatatan Data Bencana dan Posko</string>
+        <string name="lap_awal_2">LAPORAN AWAL</string>
+        <string name="lap_perkembangan_2">LAPORAN PERKEMBANGAN</string>
+        <string-array name="nama_provinsi">
+            <item >Aceh</item>
+            <item >Bali</item>
+            <item >Banten</item>
+            <item >Bengkulu</item>
+            <item >Gorontalo</item>
+            <item >DKI Jakarta</item>
+            <item >Jambi</item>
+            <item >Jawa Barat</item>
+            <item >Jawa Tengah</item>
+            <item >Jawa Timur</item>
+            <item >Kalimantan Barat</item>
+            <item >Kalimantan Selatan</item>
+            <item >Kalimantan Tengah</item>
+            <item >Kalimantan Timur</item>
+            <item >Kalimantan Utara</item>
+            <item >Kepulauan Bangka Belitung</item>
+            <item >Kepulauan Riau</item>
+            <item >Lampung</item>
+            <item >Maluku</item>
+            <item >Maluku Utara</item>
+            <item >Nusa Tenggara Barat</item>
+            <item >Nusa Tenggara Timur</item>
+            <item >Papua</item>
+            <item >Papua Barat</item>
+            <item >Riau</item>
+            <item >Sulawesi Barat</item>
+            <item >Sulawesi Selatan</item>
+            <item >Sulawesi Tengah</item>
+            <item >Sulawesi Utara</item>
+            <item >Sumatera Barat</item>
+            <item >Sumatera Selatan</item>
+            <item >Sumatera Utara</item>
+            <item >Yogyakarta</item>
+        </string-array>
+        <string name="trc">Tim Reaksi Cepat</string>
+        <string name="tim_bpbd">Tim BPBD</string>
+        <string name="tim_dinsos">Tim Dinsos</string>
+        <string name="tim_dinkes">Tim Dinkes</string>
+        <string name="tim_pu">Tim PU</string>
+        <string name="subtim">Sub Tim</string>
+        <string name="id_bencana">ID Bencana</string>
+        <string name="id_posko">ID Posko</string>
+        <string name="tampil_pass">Tampilkan Password</string>
+        <string name="jumlah_tim_bpbd">Jumlah Tim BPBD</string>
+        <string name="jumlah_tim_dinsos">Jumlah Tim Dinsos</string>
+        <string name="jumlah_tim_dinkes">Jumlah Tim Dinkes</string>
+        <string name="jumlah_tim_pu">Jumlah Tim PU</string>
+        <string name="jumlah_subtim">Jumlah Sub Tim</string>
+        <string name="lba">Laporan Awal Bencana</string>
+        <string name="lbp">Laporan Perkembangan Bencana</string>
+        <string name="lpa">Laporan Awal Posko</string>
+        <string name="lpp">Laporan Perkembangan Posko</string>
+        <string name="id_petugas">ID Petugas</string>
+        <string name="masukan_id_petugas">Masukan ID Petugas</string>
+        <string name="petugas">Petugas</string>
+        <string name="info_gps">*Bila koordinat lokasi muncul, menandakan fungsi GPS dapat digunakan</string>
+
+</resources>

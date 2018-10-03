@@ -1,0 +1,9 @@
+Mon 2010/05/17 08:07:55 gammu-smsd-inject[3376]: Warning: No PIN code in smsdrc file
+Mon 2010/05/17 08:07:55 gammu-smsd-inject[3376]: Connected to Database: smsd on localhost
+Mon 2010/05/17 08:07:55 gammu-smsd-inject[3376]: Written message with ID 43
+Mon 2010/05/17 08:10:43 gammu-smsd-inject[1840]: Connected to Database: smsd on localhost
+Mon 2010/05/17 08:10:43 gammu-smsd-inject[1840]: Written message with ID 44
+Mon 2010/05/17 08:32:20 gammu-smsd-inject[2812]: Connected to Database: smsd on localhost
+Mon 2010/05/17 08:32:20 gammu-smsd-inject[2812]: Written message with ID 48
+Fri 2010/05/28 14:13:13 gammu-smsd-inject[3056]: Connected to Database: v2 on localhost
+Fri 2010/05/28 14:13:13 gammu-smsd-inject[3056]: Written message with ID 1

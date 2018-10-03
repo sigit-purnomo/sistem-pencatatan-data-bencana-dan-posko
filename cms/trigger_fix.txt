@@ -1,0 +1,999 @@
+DROP TRIGGER IF EXISTS trigger_sms;
+
+DELIMITER |
+ 
+CREATE TRIGGER trigger_sms 
+AFTER INSERT ON smsdb.inbox 
+FOR EACH ROW
+
+BEGIN
+DECLARE KodeSMS VARCHAR(50);
+DECLARE SMSCounter INT DEFAULT 1;
+DECLARE SMSLimitCounter INT DEFAULT 0;
+DECLARE SMSFoundCounter INT DEFAULT 0;
+DECLARE DataSMSFound INT DEFAULT 0;
+
+DECLARE Counter INT DEFAULT 1;
+DECLARE LimitCounter INT DEFAULT 0;
+DECLARE Tampung VARCHAR(1000);
+DECLARE Tampung2 VARCHAR(1000);
+
+DECLARE PartSMS VARCHAR(1000);
+
+DECLARE NoPetugas VARCHAR(100);
+
+DECLARE IDPetugas VARCHAR (100);
+/*Variabel Posko*/
+DECLARE IDPosko VARCHAR(100);
+DECLARE NamaPosko VARCHAR(100);
+DECLARE LatitudePosko VARCHAR(100);
+DECLARE LongitudePosko VARCHAR(100);
+DECLARE DusunPosko VARCHAR(100);
+DECLARE KecamatanPosko VARCHAR(100);
+DECLARE KotaPosko VARCHAR(100);
+DECLARE ProvinsiPosko VARCHAR(100);
+/*mulai awal perkembangan posko*/
+DECLARE KapasitasPosko VARCHAR(100);
+DECLARE JumlahFasilitasDapurPosko VARCHAR(100);
+DECLARE JumlahFasilitasKesehatan VARCHAR(100);
+DECLARE JumlahFasilitasMCKPosko VARCHAR(100);
+
+DECLARE JumlahKKPoskoMengungsi VARCHAR(100);
+DECLARE JumlahPriaMengungsi VARCHAR(100);
+DECLARE JumlahWanitaMengungsi VARCHAR(100);
+DECLARE JumlahBalitaMengungsi VARCHAR(100);
+
+DECLARE IDPoskoUpdate VARCHAR(100);
+
+/*Variabel Bencana*/
+DECLARE IDBencana VARCHAR(100);
+DECLARE JumlahTimBPBD VARCHAR(100);
+DECLARE JumahTimDinkes VARCHAR(100);
+DECLARE JumlahTimDinsos VARCHAR(100);
+DECLARE JumlahTimPU VARCHAR(100);
+DECLARE JenisKejadianBencana VARCHAR(100);
+DECLARE WaktuBencana VARCHAR(100);
+DECLARE TanggalBencana VARCHAR(100);
+DECLARE LatitudeBencana VARCHAR(100);
+DECLARE LongitudeBencana VARCHAR(100);
+
+DECLARE LokasiDusunBencana VARCHAR(100);
+DECLARE LokasiDesaBencana VARCHAR(100);
+DECLARE LokasiKecamatanBencana VARCHAR(100);
+DECLARE LokasiKabupatenBencana VARCHAR(100);
+DECLARE PenyebabBencana VARCHAR(100);
+
+DECLARE JumlahMeninggal VARCHAR(100);
+DECLARE JumlahLukaBerat VARCHAR(100);
+DECLARE JumlahLukaRingan VARCHAR(100);
+DECLARE JumlahHilang VARCHAR(100);
+DECLARE JumlahJiwaMengungsi VARCHAR(100);
+DECLARE JumlahKKMengungsi VARCHAR(100);
+
+DECLARE JumlahRumahRusak VARCHAR(100);
+DECLARE JumlahKantorRusak VARCHAR(100);
+DECLARE JumlahFasilitasKesehatanRusak VARCHAR(100);
+DECLARE JumlahFasilitasPendidikanRusak VARCHAR(100);
+DECLARE JumlahFasilitasUmumRusak VARCHAR(100);
+DECLARE JumlahSaranaIbadahRusak VARCHAR(100);
+   
+DECLARE JumlahJembatanRusak VARCHAR(100);
+DECLARE JumlahJalanRusak VARCHAR(100);
+DECLARE JumlahTanggulRusak VARCHAR(100);
+DECLARE JumlahSawahRusak VARCHAR(100);
+DECLARE JumlahLahanRusak VARCHAR(100);
+DECLARE JumlahLainLainRusak VARCHAR(100);
+
+DECLARE WaktuPeninjauan VARCHAR(100);
+DECLARE TanggalPeninjauan VARCHAR(100);
+DECLARE MendirikanPosko VARCHAR(100);
+DECLARE MelakukanRapat VARCHAR(100);
+DECLARE MelaksanakanEvakuasi VARCHAR(100);
+DECLARE PelayananKesehatan VARCHAR(100);
+DECLARE DapurUmum VARCHAR(100);
+DECLARE BantuanMakanan VARCHAR(100);
+DECLARE PengarahanTenaga VARCHAR(100);
+     
+DECLARE SumberDaya VARCHAR(100);
+DECLARE Kendala VARCHAR(100);
+DECLARE Kebutuhan VARCHAR(100);
+DECLARE RencanaTdkLanjut VARCHAR(100);
+
+DECLARE IDBencanaUpdate VARCHAR(100);
+DECLARE JumlahSubTim VARCHAR(100);
+DECLARE LokasiBencana VARCHAR (100);
+DECLARE NamaBencana VARCHAR (100);
+
+SET NoPetugas = (SELECT NEW.SenderNumber);
+
+    IF(SELECT SUBSTRING(NEW.TextDecoded, '6', '3') = 'LPA') /*kondisi untuk laporan awal posko*/
+    THEN 
+
+        SET SMSLimitCounter = (SELECT RIGHT ('00' + LTRIM(SUBSTRING(NEW.TextDecoded, '4', '2')),2)); /*Set jumlah part sms yang akan diterima, misal 1 atau 2*/
+        SET Tampung = '';
+        SET KodeSMS = (SELECT SUBSTRING(NEW.TextDecoded, '1', '3'));
+        WHILE SMSCounter <= SMSLimitCounter DO /*looping untuk ngecek apakah semua part sms sudah masuk*/
+            
+            SET SMSFoundCounter = (SELECT COUNT(*) FROM smsdb.inbox  
+            WHERE SUBSTRING(TextDecoded, '1', '3') = KodeSMS /*kode sms*/
+            AND SUBSTRING(TextDecoded, '6', '3') = 'LPA' /*jenis laporan*/
+            AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '9', '2')),2) = SMSCounter /*nomor part sms ke - xx */
+            AND SenderNumber = NoPetugas
+            ORDER BY ReceivingDateTime DESC 
+            limit 1);/*cek part sms*/
+
+            IF(SMSFoundCounter = '1') /*jika part sms yang dimaksud ada*/
+            THEN /*ambil isi smsnya*/
+                
+                SET PartSMS = (SELECT SUBSTRING(TextDecoded,'11') FROM smsdb.inbox  
+                WHERE SUBSTRING(TextDecoded, '1', '3') = KodeSMS /*kode sms*/
+                AND SUBSTRING(TextDecoded, '6', '3') = 'LPA' /*jenis laporan*/
+                AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '9', '2')),2) = SMSCounter /*nomor part sms ke - xx */
+                AND SenderNumber = NoPetugas
+                ORDER BY ReceivingDateTime DESC 
+                limit 1);
+                SET Tampung = (SELECT CONCAT(Tampung,PartSMS));
+                /*nampung isi pesan tanpa header diaksih akhiran ~*/
+
+                SET DataSMSFound = DataSMSFound + 1;/*Notif bahwa part pesan ada*/  
+            END IF;
+
+        SET SMSCounter = SMSCounter + 1;
+
+        END WHILE;
+
+        IF(DataSMSFound = SMSLimitCounter) /*Cek notif bila seluruh part sms sudah masuk semua / 1 laporan dinyatakan lengkap */
+        THEN 
+            SET LimitCounter = (SELECT LENGTH(Tampung) - LENGTH(REPLACE(Tampung, '~', ''))+1); 
+
+            WHILE Counter <= LimitCounter DO
+
+                SET Tampung2 = (SELECT SPLIT_STR(Tampung, '~', Counter));
+                /*ambil komponen isi sms*/
+                IF Counter = 1 THEN
+                    SET IDPetugas = Tampung2;
+
+                ELSEIF Counter = 2 THEN
+                    SET IDPosko = Tampung2;
+
+                ELSEIF Counter = 3 THEN    
+                    SET IDBencana = Tampung2;
+
+                ELSEIF Counter = 4 THEN
+                    SET NamaPosko = Tampung2;
+
+                ELSEIF Counter = 5 THEN
+                    SET LatitudePosko = Tampung2;
+
+                ELSEIF Counter = 6 THEN
+                    SET LongitudePosko = Tampung2;
+
+                ELSEIF Counter = 7 THEN
+                    SET DusunPosko = Tampung2;
+
+                ELSEIF Counter = 8 THEN
+                    SET KecamatanPosko = Tampung2;
+
+                ELSEIF Counter = 9 THEN
+                    SET KotaPosko = Tampung2;
+
+                ELSEIF Counter = 10 THEN
+                    SET ProvinsiPosko = Tampung2;
+
+                ELSEIF Counter = 11 THEN
+                    SET KapasitasPosko = Tampung2;
+
+                ELSEIF Counter = 12 THEN
+                    SET JumlahFasilitasDapurPosko = Tampung2;
+
+                ELSEIF Counter = 13 THEN
+                    SET JumlahFasilitasKesehatan = Tampung2;
+
+                ELSEIF Counter = 14 THEN
+                    SET JumlahFasilitasMCKPosko = Tampung2;
+
+                ELSEIF Counter = 15 THEN
+                    SET JumlahKKPoskoMengungsi = Tampung2;
+
+                ELSEIF Counter = 16 THEN
+                    SET JumlahPriaMengungsi = Tampung2;
+
+                ELSEIF Counter = 17 THEN
+                    SET JumlahWanitaMengungsi = Tampung2;
+
+                ELSEIF Counter = 18 THEN
+                    SET JumlahBalitaMengungsi = Tampung2;
+                    
+                END IF;
+                SET Tampung2 = '';
+                SET Counter = Counter + 1;
+
+            END WHILE;
+
+        /*insert dalam database */
+        /*    INSERT INTO ta.posko
+            (
+                id_posko,
+                id_bencana,
+                nama_posko,
+                latitude,
+                longitude,
+                lokasi_posko_dusun,
+                lokasi_posko_kecamatan,
+                lokasi_posko_kota,
+                lokasi_posko_provinsi,
+                status,
+                sinkron
+            )
+            VALUES
+            (       
+                IDPosko,
+                IDBencana,    
+                NamaPosko,
+                LatitudePosko,
+                LongitudePosko,
+                DusunPosko,
+                KecamatanPosko,
+                KotaPosko,
+                ProvinsiPosko,
+                '1',
+                '0'
+            );*/
+
+            UPDATE ta.posko
+            SET id_bencana = IDBencana,
+            nama_posko = NamaPosko,
+            latitude = LatitudePosko,
+            longitude = LongitudePosko,
+            lokasi_posko_dusun = DusunPosko,
+            lokasi_posko_kecamatan = KecamatanPosko,
+            lokasi_posko_kota = KotaPosko,
+            lokasi_posko_provinsi = ProvinsiPosko,
+            status = '1'
+            WHERE id_posko = IDPosko;
+            
+            INSERT INTO ta.laporan_posko
+            (
+                id_posko,
+                id_user,
+                tgl_lap_posko,
+                jam_lap_posko,
+                kapasitas,
+                fasilitas_dapur,
+                fasilitas_kesehatan,
+                fasilitas_mck,
+                jumlah_kk,
+                jumlah_pria,
+                jumlah_wanita,
+                jumlah_balita,
+                status,
+                sinkron
+            )
+            VALUES
+            (
+                IDPosko,
+                IDPetugas,
+                DATE_FORMAT(NOW(),'%Y-%m-%d'), 
+                DATE_FORMAT(NOW(), '%T:%f'), 
+                KapasitasPosko,
+                JumlahFasilitasDapurPosko,
+                JumlahFasilitasKesehatan,
+                JumlahFasilitasMCKPosko,
+                JumlahKKPoskoMengungsi,
+                JumlahPriaMengungsi,
+                JumlahWanitaMengungsi,
+                JumlahBalitaMengungsi,
+                '1',
+                '0'
+            );
+        END IF;
+
+    ELSEIF(SELECT SUBSTRING(NEW.TextDecoded, '6', '3') = 'LPP') /*kondisi untuk laporan perkembangan posko*/
+    THEN
+        SET SMSLimitCounter = (SELECT RIGHT ('00' + LTRIM(SUBSTRING(NEW.TextDecoded, '4', '2')),2)); /*Set jumlah part sms yang akan diterima, misal 1 atau 2*/
+        SET Tampung = '';
+        SET KodeSMS = (SELECT SUBSTRING(NEW.TextDecoded, '1', '3'));
+        WHILE SMSCounter <= SMSLimitCounter DO /*looping untuk ngecek apakah semua part sms sudah masuk*/
+            
+            SET SMSFoundCounter = (SELECT COUNT(*) FROM smsdb.inbox  
+            WHERE SUBSTRING(TextDecoded, '1', '3') = KodeSMS /*kode sms*/
+            AND SUBSTRING(TextDecoded, '6', '3') = 'LPP' /*jenis laporan*/
+            AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '9', '2')),2) = SMSCounter /*nomor part sms ke - xx */
+            AND SenderNumber = NoPetugas
+            ORDER BY ReceivingDateTime DESC 
+            limit 1);/*cek part sms*/
+
+            IF(SMSFoundCounter = '1') /*jika part sms yang dimaksud ada*/
+            THEN /*ambil isi smsnya*/
+
+                SET PartSMS = (SELECT SUBSTRING(TextDecoded,'11') FROM smsdb.inbox  
+                WHERE SUBSTRING(TextDecoded, '1', '3') = KodeSMS /*kode sms*/
+                AND SUBSTRING(TextDecoded, '6', '3') = 'LPP' /*jenis laporan*/
+                AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '9', '2')),2) = SMSCounter /*nomor part sms ke - xx */
+                AND SenderNumber = NoPetugas
+                ORDER BY ReceivingDateTime DESC 
+                limit 1);
+                SET Tampung = (SELECT CONCAT(Tampung,PartSMS));
+                /*nampung isi pesan tanpa header diaksih akhiran ~*/
+
+                SET DataSMSFound = DataSMSFound + 1;/*Notif bahwa part pesan ada*/ 
+
+            END IF;
+
+            SET SMSCounter = SMSCounter + 1;
+
+        END WHILE;
+
+        IF(DataSMSFound = SMSLimitCounter) /*Cek notif bila seluruh part sms sudah masuk semua / 1 laporan dinyatakan lengkap */
+        THEN 
+            SET LimitCounter = (SELECT LENGTH(Tampung) - LENGTH(REPLACE(Tampung, '~', ''))+1); 
+
+            WHILE Counter <= LimitCounter DO
+                SET Tampung2 = (SELECT SPLIT_STR(Tampung, '~', Counter));
+                /*ambil komponen isi sms*/
+                IF Counter = 1 THEN
+                    SET IDPetugas = Tampung2;
+
+                ELSEIF Counter = 2 THEN
+                    SET IDPoskoUpdate = Tampung2;
+
+                ELSEIF Counter = 3 THEN
+                    SET KapasitasPosko = Tampung2;
+
+                ELSEIF Counter = 4 THEN
+                    SET JumlahFasilitasDapurPosko = Tampung2;
+
+                ELSEIF Counter = 5 THEN
+                    SET JumlahFasilitasKesehatan = Tampung2;
+
+                ELSEIF Counter = 6 THEN
+                    SET JumlahFasilitasMCKPosko = Tampung2;
+
+                ELSEIF Counter = 7 THEN
+                    SET JumlahKKPoskoMengungsi = Tampung2;
+
+                ELSEIF Counter = 8 THEN
+                    SET JumlahPriaMengungsi = Tampung2;
+
+                ELSEIF Counter = 9 THEN
+                    SET JumlahWanitaMengungsi = Tampung2;
+
+                ELSEIF Counter = 10 THEN
+                    SET JumlahBalitaMengungsi = Tampung2;
+                    
+                END IF;
+
+                SET Counter = Counter + 1;
+
+            END WHILE;
+
+        /*insert dalam database */
+            INSERT INTO ta.laporan_posko
+            (
+                id_posko,
+                id_user,
+                tgl_lap_posko,
+                jam_lap_posko,
+                kapasitas,
+                fasilitas_dapur,
+                fasilitas_kesehatan,
+                fasilitas_mck,
+                jumlah_kk,
+                jumlah_pria,
+                jumlah_wanita,
+                jumlah_balita,
+                status,
+                sinkron
+            )
+            VALUES
+            (
+                IDPoskoUpdate,
+                IDPetugas,
+                DATE_FORMAT(NOW(),'%Y-%m-%d'), 
+                DATE_FORMAT(NOW(), '%T:%f'), 
+                KapasitasPosko,
+                JumlahFasilitasDapurPosko,
+                JumlahFasilitasKesehatan,
+                JumlahFasilitasMCKPosko,
+                JumlahKKPoskoMengungsi,
+                JumlahPriaMengungsi,
+                JumlahWanitaMengungsi,
+                JumlahBalitaMengungsi,
+                '1',
+                '0'
+            );
+        END IF;    
+      
+    ELSEIF(SELECT SUBSTRING(NEW.TextDecoded, '6', '3') = 'LBA') /*kondisi untuk laporan awal bencana*/
+    THEN 
+        SET SMSLimitCounter = (SELECT RIGHT ('00' + LTRIM(SUBSTRING(NEW.TextDecoded, '4', '2')),2)); /*Set jumlah part sms yang akan diterima, misal 1 atau 2*/
+        SET Tampung = '';
+        SET KodeSMS = (SELECT SUBSTRING(NEW.TextDecoded, '1', '3'));
+        WHILE SMSCounter <= SMSLimitCounter DO /*looping untuk ngecek apakah semua part sms sudah masuk*/
+            
+            SET SMSFoundCounter = (SELECT COUNT(*) FROM smsdb.inbox  
+            WHERE SUBSTRING(TextDecoded, '1', '3') = KodeSMS /*kode sms*/
+            AND SUBSTRING(TextDecoded, '6', '3') = 'LBA' /*jenis laporan*/
+            AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '9', '2')),2) = SMSCounter /*nomor part sms ke - xx */
+            AND SenderNumber = NoPetugas
+            ORDER BY ReceivingDateTime DESC 
+            limit 1);/*cek part sms*/
+
+            IF(SMSFoundCounter = '1') /*jika part sms yang dimaksud ada*/
+            THEN /*ambil isi smsnya*/
+                
+                SET PartSMS = (SELECT SUBSTRING(TextDecoded,'11') FROM smsdb.inbox  
+                WHERE SUBSTRING(TextDecoded, '1', '3') = KodeSMS /*kode sms*/
+                AND SUBSTRING(TextDecoded, '6', '3') = 'LBA' /*jenis laporan*/
+                AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '9', '2')),2) = SMSCounter /*nomor part sms ke - xx */
+                AND SenderNumber = NoPetugas
+                ORDER BY ReceivingDateTime DESC 
+                limit 1);
+                SET Tampung = (SELECT CONCAT(Tampung,PartSMS));
+                /*nampung isi pesan tanpa header diaksih akhiran ~*/
+
+                SET DataSMSFound = DataSMSFound + 1;/*Notif bahwa part pesan ada*/
+
+            END IF;
+
+        SET SMSCounter = SMSCounter + 1;
+
+        END WHILE;
+
+        IF(DataSMSFound = SMSLimitCounter) /*Cek notif bila seluruh part sms sudah masuk semua / 1 laporan dinyatakan lengkap */
+        THEN 
+            SET LimitCounter = (SELECT LENGTH(Tampung) - LENGTH(REPLACE(Tampung, '~', ''))+1); 
+
+            WHILE Counter <= LimitCounter DO
+                SET Tampung2 = (SELECT SPLIT_STR(Tampung, '~', Counter));
+                /*ambil komponen isi sms*/
+                IF Counter = 1 THEN
+                    SET IDPetugas = Tampung2;
+
+                ELSEIF Counter = 2 THEN    
+                    SET IDBencana = Tampung2;
+
+                ELSEIF Counter = 3 THEN    
+                    SET JumlahTimBPBD = Tampung2;
+
+                ELSEIF Counter = 4 THEN
+                    SET JumahTimDinkes = Tampung2;
+
+                ELSEIF Counter = 5 THEN
+                    SET JumlahTimDinsos = Tampung2;
+
+                ELSEIF Counter = 6 THEN
+                    SET JumlahTimPU = Tampung2;
+
+                ELSEIF Counter = 7 THEN
+                    SET JenisKejadianBencana = Tampung2;
+
+                ELSEIF Counter = 8 THEN
+                    SET WaktuBencana = Tampung2;
+
+                ELSEIF Counter = 9 THEN
+                    SET TanggalBencana = Tampung2;
+
+                ELSEIF Counter = 10 THEN
+                    SET LatitudeBencana = Tampung2;
+
+                ELSEIF Counter = 11 THEN
+                    SET LongitudeBencana = Tampung2;
+
+                ELSEIF Counter = 12 THEN
+                    SET LokasiDusunBencana = Tampung2;
+
+                ELSEIF Counter = 13 THEN
+                    SET LokasiDesaBencana = Tampung2;
+
+                ELSEIF Counter = 14 THEN
+                    SET LokasiKecamatanBencana = Tampung2;
+
+                ELSEIF Counter = 15 THEN
+                    SET LokasiKabupatenBencana = Tampung2;
+
+                ELSEIF Counter = 16 THEN
+                    SET PenyebabBencana = Tampung2;
+
+                ELSEIF Counter = 17 THEN
+                    SET JumlahMeninggal = Tampung2;
+
+                ELSEIF Counter = 18 THEN
+                    SET JumlahLukaBerat = Tampung2;
+
+                ELSEIF Counter = 19 THEN
+                    SET JumlahLukaRingan = Tampung2;
+                    
+                ELSEIF Counter = 20 THEN
+                    SET JumlahHilang = Tampung2;
+
+                ELSEIF Counter = 21 THEN
+                    SET JumlahJiwaMengungsi = Tampung2;
+
+                ELSEIF Counter = 22 THEN
+                    SET JumlahKKMengungsi = Tampung2;
+
+                ELSEIF Counter = 23 THEN
+                    SET JumlahRumahRusak = Tampung2;
+
+                ELSEIF Counter = 24 THEN
+                    SET JumlahKantorRusak = Tampung2;
+                    
+                ELSEIF Counter = 25 THEN
+                    SET JumlahFasilitasKesehatanRusak = Tampung2;                 
+
+                ELSEIF Counter = 26 THEN
+                    SET JumlahFasilitasPendidikanRusak = Tampung2;
+                    
+                ELSEIF Counter = 27 THEN
+                    SET JumlahFasilitasUmumRusak = Tampung2;           
+
+                ELSEIF Counter = 28 THEN
+                    SET JumlahSaranaIbadahRusak = Tampung2;
+                    
+                ELSEIF Counter = 29 THEN
+                    SET JumlahJembatanRusak = Tampung2;  
+
+                ELSEIF Counter = 30 THEN
+                    SET JumlahJalanRusak = Tampung2; 
+
+                ELSEIF Counter = 31 THEN
+                    SET JumlahTanggulRusak = Tampung2;  
+
+                ELSEIF Counter = 32 THEN
+                    SET JumlahSawahRusak = Tampung2;   
+
+                ELSEIF Counter = 33 THEN
+                    SET JumlahLahanRusak = Tampung2;   
+
+                ELSEIF Counter = 34 THEN
+                    SET JumlahLainLainRusak = Tampung2;   
+
+                ELSEIF Counter = 35 THEN
+                    SET WaktuPeninjauan = Tampung2;
+
+                ELSEIF Counter = 36 THEN
+                    SET TanggalPeninjauan = Tampung2;
+
+                ELSEIF Counter = 37 THEN
+                    SET MendirikanPosko = Tampung2;
+
+                ELSEIF Counter = 38 THEN
+                    SET MelakukanRapat = Tampung2;
+
+                ELSEIF Counter = 39 THEN
+                    SET MelaksanakanEvakuasi = Tampung2;
+
+                ELSEIF Counter = 40 THEN
+                    SET PelayananKesehatan = Tampung2;
+
+                ELSEIF Counter = 41 THEN
+                    SET DapurUmum = Tampung2; 
+
+                ELSEIF Counter = 42 THEN
+                    SET BantuanMakanan = Tampung2; 
+
+                ELSEIF Counter = 43 THEN
+                    SET PengarahanTenaga = Tampung2; 
+
+                ELSEIF Counter = 44 THEN
+                    SET SumberDaya = Tampung2;   
+
+                ELSEIF Counter = 45 THEN
+                    SET Kendala = Tampung2;
+
+                ELSEIF Counter = 46 THEN
+                    SET Kebutuhan = Tampung2;
+
+                ELSEIF Counter = 47 THEN
+                    SET RencanaTdkLanjut = Tampung2;
+        
+                END IF;
+
+                SET Counter = Counter + 1;
+
+            END WHILE;
+            SET LokasiBencana = (SELECT CONCAT(LokasiDusunBencana,', ',LokasiDesaBencana,', ',LokasiKecamatanBencana,', ',LokasiKabupatenBencana));
+            SET NamaBencana = (SELECT CONCAT('Bencana ',JenisKejadianBencana,' ',LokasiDusunBencana));
+
+        /*insert dalam database */
+        /*    INSERT INTO ta.bencana
+            (
+                id_bencana,
+                jenis_bencana,
+                lokasi,
+                penyebab,
+                jam,
+                tanggal,
+                latitude,
+                longitude,
+                nama_bencana, 
+                status, 
+                sinkron
+            )
+            VALUES
+            (     
+                IDBencana,  
+                JenisKejadianBencana,    
+                LokasiBencana,
+                PenyebabBencana,
+                WaktuBencana,
+                TanggalBencana,
+                LatitudeBencana,
+                LongitudeBencana,
+                NamaBencana,
+                '1',
+                '0'
+            );*/
+
+            UPDATE ta.bencana
+            SET jenis_bencana = JenisKejadianBencana,
+            lokasi = LokasiBencana,
+            penyebab = PenyebabBencana,
+            jam = WaktuBencana,
+            tanggal = TanggalBencana,
+            latitude = LatitudeBencana,
+            longitude = LongitudeBencana,
+            nama_bencana = NamaBencana,
+            status = '1'
+            WHERE id_bencana = IDBencana;
+
+            INSERT INTO ta.laporan_bencana
+            (
+                id_bencana,
+                id_user,
+                tanggal_laporan,
+                jam_laporan,
+                meninggal,
+                luka_berat,
+                hilang,
+                mengungsi_jiwa,
+                mengungsi_kk,
+                rumah,
+                kantor,
+                fasilitas_kesehatan,
+                fasilitas_pendidikan,
+                fasilitas_umum,
+                sarana_ibadah,
+                jembatan,
+                jalan,
+                tanggul,
+                sawah,
+                lahan_pertanian,
+                lain_lain,
+                bupati_tgl,
+                bupati_jam,
+                posko,
+                koordinasi,
+                evakuasi,
+                kesehatan,
+                dapur,
+                distribusi,
+                pengerahan,
+                sumber_daya,
+                kendala,
+                kebutuhan_mendesak,
+                rencana_tidak_lanjut,
+                luka_ringan,
+                tim_bpbd,
+                tim_dinsos,
+                tim_dinkes,
+                tim_pu,
+                sub_tim,
+                status,
+                sinkron
+            )
+            VALUES
+            (
+                (SELECT id_bencana FROM ta.bencana WHERE 
+                jenis_bencana = JenisKejadianBencana AND 
+                latitude = LatitudeBencana AND
+                longitude = LongitudeBencana LIMIT 1),
+                IDPetugas,
+                DATE_FORMAT(NOW(),'%Y-%m-%d'), 
+                DATE_FORMAT(NOW(), '%T:%f'), 
+                JumlahMeninggal,
+                JumlahLukaBerat,
+                JumlahHilang,
+                JumlahJiwaMengungsi,
+                JumlahKKMengungsi,
+                JumlahRumahRusak,
+                JumlahKantorRusak,
+                JumlahFasilitasKesehatanRusak,
+                JumlahFasilitasPendidikanRusak,
+                JumlahFasilitasUmumRusak,
+                JumlahSaranaIbadahRusak,
+                JumlahJembatanRusak,
+                JumlahJalanRusak,
+                JumlahTanggulRusak,
+                JumlahSawahRusak,
+                JumlahLahanRusak,
+                JumlahLainLainRusak,
+                TanggalPeninjauan,
+                WaktuPeninjauan,
+                MendirikanPosko,
+                MelakukanRapat,
+                MelaksanakanEvakuasi,
+                PelayananKesehatan,
+                DapurUmum,
+                BantuanMakanan,
+                PengarahanTenaga,
+                SumberDaya,
+                Kendala,
+                Kebutuhan,
+                RencanaTdkLanjut,
+                JumlahLukaRingan,
+                JumlahTimBPBD,
+                JumlahTimDinsos,
+                JumahTimDinkes,
+                JumlahTimPU,
+                '0',
+                '1',
+                '0'
+
+            );
+        END IF; 
+       
+    ELSEIF(SELECT SUBSTRING(NEW.TextDecoded, '6', '3') = 'LBP') /*kondisi untuk laporan perkembangan bencana*/
+    THEN 
+
+        SET SMSLimitCounter = (SELECT RIGHT ('00' + LTRIM(SUBSTRING(NEW.TextDecoded, '4', '2')),2)); /*Set jumlah part sms yang akan diterima, misal 1 atau 2*/
+        SET Tampung = '';
+        SET KodeSMS = (SELECT SUBSTRING(NEW.TextDecoded, '1', '3'));
+        WHILE SMSCounter <= SMSLimitCounter DO /*looping untuk ngecek apakah semua part sms sudah masuk*/
+            
+            SET SMSFoundCounter = (SELECT COUNT(*) FROM smsdb.inbox  
+            WHERE SUBSTRING(TextDecoded, '1', '3') = KodeSMS /*kode sms*/
+            AND SUBSTRING(TextDecoded, '6', '3') = 'LBP' /*jenis laporan*/
+            AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '9', '2')),2) = SMSCounter /*nomor part sms ke - xx */
+            AND SenderNumber = NoPetugas
+            ORDER BY ReceivingDateTime DESC 
+            limit 1);/*cek part sms*/
+
+        IF(SMSFoundCounter = '1') /*jika part sms yang dimaksud ada*/
+            THEN /*ambil isi smsnya*/
+                
+                SET PartSMS = (SELECT SUBSTRING(TextDecoded,'11') FROM smsdb.inbox  
+                WHERE SUBSTRING(TextDecoded, '1', '3') = KodeSMS /*kode sms*/
+                AND SUBSTRING(TextDecoded, '6', '3') = 'LBP' /*jenis laporan*/
+                AND RIGHT ('00' + LTRIM(SUBSTRING(TextDecoded, '9', '2')),2) = SMSCounter /*nomor part sms ke - xx */
+                AND SenderNumber = NoPetugas
+                ORDER BY ReceivingDateTime DESC 
+                limit 1);
+                SET Tampung = (SELECT CONCAT(Tampung,PartSMS));
+                /*nampung isi pesan tanpa header diaksih akhiran ~*/
+
+                SET DataSMSFound = DataSMSFound + 1;/*Notif bahwa part pesan ada*/
+
+            END IF;
+
+        SET SMSCounter = SMSCounter + 1;
+
+        END WHILE;
+
+        IF(DataSMSFound = SMSLimitCounter) /*Cek notif bila seluruh part sms sudah masuk semua / 1 laporan dinyatakan lengkap */
+        THEN 
+            SET LimitCounter = (SELECT LENGTH(Tampung) - LENGTH(REPLACE(Tampung, '~', ''))+1); 
+
+            WHILE Counter <= LimitCounter DO
+                SET Tampung2 = (SELECT SPLIT_STR(Tampung, '~', Counter));
+                /*ambil komponen isi sms*/
+                IF Counter = 1 THEN
+                    SET IDPetugas = Tampung2;
+
+                ELSEIF Counter = 2 THEN
+                    SET IDBencanaUpdate = Tampung2;
+
+                ELSEIF Counter = 3 THEN
+                    SET JumlahSubTim = Tampung2;
+
+                ELSEIF Counter = 4 THEN
+                    SET JumlahMeninggal = Tampung2;
+
+                ELSEIF Counter = 5 THEN
+                    SET JumlahLukaBerat = Tampung2;
+
+                ELSEIF Counter = 6 THEN
+                    SET JumlahLukaRingan = Tampung2;
+                    
+                ELSEIF Counter = 7 THEN
+                    SET JumlahHilang = Tampung2;
+
+                ELSEIF Counter = 8 THEN
+                    SET JumlahJiwaMengungsi = Tampung2;
+
+                ELSEIF Counter = 9 THEN
+                    SET JumlahKKMengungsi = Tampung2;
+
+                ELSEIF Counter = 10 THEN
+                    SET JumlahRumahRusak = Tampung2;
+
+                ELSEIF Counter = 11 THEN
+                    SET JumlahKantorRusak = Tampung2;
+                    
+                ELSEIF Counter = 12 THEN
+                    SET JumlahFasilitasKesehatanRusak = Tampung2;                 
+
+                ELSEIF Counter = 13 THEN
+                    SET JumlahFasilitasPendidikanRusak = Tampung2;
+                    
+                ELSEIF Counter = 14 THEN
+                    SET JumlahFasilitasUmumRusak = Tampung2;           
+
+                ELSEIF Counter = 15 THEN
+                    SET JumlahSaranaIbadahRusak = Tampung2;
+                    
+                ELSEIF Counter = 16 THEN
+                    SET JumlahJembatanRusak = Tampung2;  
+
+                ELSEIF Counter = 17 THEN
+                    SET JumlahJalanRusak = Tampung2; 
+
+                ELSEIF Counter = 18 THEN
+                    SET JumlahTanggulRusak = Tampung2;  
+
+                ELSEIF Counter = 19 THEN
+                    SET JumlahSawahRusak = Tampung2;   
+
+                ELSEIF Counter = 20 THEN
+                    SET JumlahLahanRusak = Tampung2;   
+
+                ELSEIF Counter = 21 THEN
+                    SET JumlahLainLainRusak = Tampung2;   
+
+                ELSEIF Counter = 22 THEN
+                    SET WaktuPeninjauan = Tampung2;
+
+                ELSEIF Counter = 23 THEN
+                    SET TanggalPeninjauan = Tampung2;
+
+                ELSEIF Counter = 24 THEN
+                    SET MendirikanPosko = Tampung2;
+
+                ELSEIF Counter = 25 THEN
+                    SET MelakukanRapat = Tampung2;
+
+                ELSEIF Counter = 26 THEN
+                    SET MelaksanakanEvakuasi = Tampung2;
+
+                ELSEIF Counter = 27 THEN
+                    SET PelayananKesehatan = Tampung2;
+
+                ELSEIF Counter = 28 THEN
+                    SET DapurUmum = Tampung2; 
+
+                ELSEIF Counter = 29 THEN
+                    SET BantuanMakanan = Tampung2; 
+
+                ELSEIF Counter = 30 THEN
+                    SET PengarahanTenaga = Tampung2; 
+
+                ELSEIF Counter = 31 THEN
+                    SET SumberDaya = Tampung2;   
+
+                ELSEIF Counter = 32 THEN
+                    SET Kendala = Tampung2;
+
+                ELSEIF Counter = 33 THEN
+                    SET Kebutuhan = Tampung2;
+
+                ELSEIF Counter = 34 THEN
+                    SET RencanaTdkLanjut = Tampung2;
+        
+                END IF;
+
+                SET Counter = Counter + 1;
+
+            END WHILE;
+
+        /*insert dalam database */
+
+            SET JumlahTimBPBD = (Select tim_bpbd from ta.laporan_bencana
+            where id_bencana = IDBencanaUpdate);    
+
+            SET JumahTimDinkes = (Select tim_dinkes from ta.laporan_bencana
+                where id_bencana = IDBencanaUpdate);
+
+            SET JumlahTimDinsos = (Select tim_dinsos from ta.laporan_bencana
+                where id_bencana = IDBencanaUpdate);
+
+            SET JumlahTimPU = (Select tim_pu from ta.laporan_bencana
+                where id_bencana = IDBencanaUpdate);
+
+            INSERT INTO ta.laporan_bencana
+            (
+                id_bencana,
+                id_user,
+                tanggal_laporan,
+                jam_laporan,
+                meninggal,
+                luka_berat,
+                hilang,
+                mengungsi_jiwa,
+                mengungsi_kk,
+                rumah,
+                kantor,
+                fasilitas_kesehatan,
+                fasilitas_pendidikan,
+                fasilitas_umum,
+                sarana_ibadah,
+                jembatan,
+                jalan,
+                tanggul,
+                sawah,
+                lahan_pertanian,
+                lain_lain,
+                bupati_tgl,
+                bupati_jam,
+                posko,
+                koordinasi,
+                evakuasi,
+                kesehatan,
+                dapur,
+                distribusi,
+                pengerahan,
+                sumber_daya,
+                kendala,
+                kebutuhan_mendesak,
+                rencana_tidak_lanjut,
+                luka_ringan,
+                tim_bpbd,
+                tim_dinsos,
+                tim_dinkes,
+                tim_pu,
+                sub_tim,
+                status, 
+                sinkron
+            )
+            VALUES
+            (
+                IDBencanaUpdate,
+                IDPetugas,
+                DATE_FORMAT(NOW(),'%Y-%m-%d'), 
+                DATE_FORMAT(NOW(), '%T:%f'), 
+                JumlahMeninggal,
+                JumlahLukaBerat,
+                JumlahHilang,
+                JumlahJiwaMengungsi,
+                JumlahKKMengungsi,
+                JumlahRumahRusak,
+                JumlahKantorRusak,
+                JumlahFasilitasKesehatanRusak,
+                JumlahFasilitasPendidikanRusak,
+                JumlahFasilitasUmumRusak,
+                JumlahSaranaIbadahRusak,
+                JumlahJembatanRusak,
+                JumlahJalanRusak,
+                JumlahTanggulRusak,
+                JumlahSawahRusak,
+                JumlahLahanRusak,
+                JumlahLainLainRusak,
+                TanggalPeninjauan,
+                WaktuPeninjauan,
+                MendirikanPosko,
+                MelakukanRapat,
+                MelaksanakanEvakuasi,
+                PelayananKesehatan,
+                DapurUmum,
+                BantuanMakanan,
+                PengarahanTenaga,
+                SumberDaya,
+                Kendala,
+                Kebutuhan,
+                RencanaTdkLanjut,
+                JumlahLukaRingan,
+                JumlahTimBPBD,
+                JumlahTimDinsos,
+                JumahTimDinkes,
+                JumlahTimPU,
+                JumlahSubTim,
+                '1',
+                '0'
+            );
+        END IF;
+    END IF;
+    
+END;
+|
+ 
+DELIMITER ;

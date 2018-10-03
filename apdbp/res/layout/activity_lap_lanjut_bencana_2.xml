@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_repeating"  >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/lbp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+			
+			<TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/editTextIDBencana"
+                android:layout_marginTop="15dp"
+                android:text="@string/trc" 
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/editTextSubTim"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView12"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/jumlah_subtim"
+                android:inputType="number" />
+            
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextIDPetugas"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:text="@string/bencana"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/editTextSubTim"
+                android:layout_marginTop="15dp"
+                android:text="@string/jumlah_korban" 
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/jumlah_meninggal" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/masukan_id_bencana" />
+
+            <EditText
+                android:id="@+id/editTextIDBencana"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView5"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/id_bencana"
+                android:inputType="number" >
+                 
+                </EditText>
+
+            <EditText
+                android:id="@+id/editTextJumlahMeninggal"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView4"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="@string/jumlah_meninggal"
+                android:inputType="number"
+                android:gravity="center" >
+
+            </EditText>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextJumlahMeninggal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/jumlah_luka_berat" />
+
+            <EditText
+                android:id="@+id/editTextJumlahLukaBerat"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView6"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="@string/jumlah_luka_berat"
+                android:inputType="number"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextJumlahLukaBerat"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/jumlah_luka_ringan" />
+
+            <EditText
+                android:id="@+id/editTextJumlahLukaRingan"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView7"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="@string/jumlah_luka_ringan" 
+                android:inputType="number"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextJumlahLukaRingan"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/jumlah_hilang" />
+
+            <EditText
+                android:id="@+id/editTextJumlahHilang"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView8"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="@string/jumlah_hilang" 
+                android:inputType="number"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextJumlahHilang"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/jumlah_jiwa_mengungsi" />
+
+            <EditText
+                android:id="@+id/editTextJumlahJiwaMengungsi"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView9"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="@string/jumlah_jiwa_mengungsi"
+                android:inputType="number" 
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextJumlahJiwaMengungsi"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/jumlah_kk_mengungsi" />
+
+            <EditText
+                android:id="@+id/editTextJumlahKKMengungsi"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/textView10"
+                android:ems="10"
+                android:hint="@string/jumlah_kk_mengungsi" 
+                android:inputType="number"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/buttonLanjut"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextJumlahKKMengungsi"
+                android:layout_alignParentRight="true"
+                android:text="@string/lanjut" 
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="25dp"
+                
+                android:textColor="#FFFFFF"
+				android:textSize="16sp"
+				android:background="@drawable/buttonselector"
+				android:shadowColor="#A8A8A8"
+				android:shadowDx="0"
+				android:shadowDy="0"
+				android:shadowRadius="5"/>
+
+            <Button
+                android:id="@+id/buttonBatal"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/editTextJumlahKKMengungsi"
+                android:text="@string/batal" 
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFFFFF"
+				android:textSize="16sp"
+				android:background="@drawable/buttonselector"
+				android:shadowColor="#A8A8A8"
+				android:shadowDx="0"
+				android:shadowDy="0"
+				android:shadowRadius="5"/>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView11"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/subtim" />
+<!--  
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextSubTim"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:text="@string/korban"
+                android:textAppearance="?android:attr/textAppearanceMedium" />-->
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView1"
+                android:layout_centerHorizontal="true"
+                android:text="@string/petugas"
+                android:layout_marginTop="16dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView13"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/masukan_id_petugas" />
+
+            <EditText
+                android:id="@+id/editTextIDPetugas"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView14"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/id_petugas"
+                android:inputType="number" ><requestFocus /></EditText>
+
+        </RelativeLayout>
+
+</ScrollView>

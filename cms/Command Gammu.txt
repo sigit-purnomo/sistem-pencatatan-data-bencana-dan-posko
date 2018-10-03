@@ -1,0 +1,9 @@
+gammu-smsd -c smsdrc -i
+gammu-smsd -c smsdrc -s
+gammu-smsd -c smsdrc -u
+
+
+$this->session->unset_userdata('id_bencana_broadcast_bencana');
+$this->session->unset_userdata('id_petugas_broadcast_bencana');
+$this->session->unset_userdata('id_bencana_broadcast_posko');
+$this->session->unset_userdata('id_petugas_broadcast_posko');	
